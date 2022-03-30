@@ -67,7 +67,9 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
 
-
+    // paging 3
+    implementation "androidx.paging:paging-runtime-ktx:3.1.1"
+    implementation 'androidx.paging:paging-compose:1.0.0-alpha14'
 
     //navigation
     implementation "androidx.navigation:navigation-compose:2.4.1"
