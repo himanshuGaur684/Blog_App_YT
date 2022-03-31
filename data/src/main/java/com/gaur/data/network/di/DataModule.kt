@@ -4,9 +4,11 @@ import android.content.Context
 import com.gaur.common.Constant
 import com.gaur.data.network.ApiService
 import com.gaur.data.repository.GetBlogsRepositoryImpl
+import com.gaur.data.repository.GetPagerBlogsRepoImpl
 import com.gaur.data.room.BlogDAO
 import com.gaur.data.room.BlogDataBase
 import com.gaur.domain.repository.GetBlogsRepository
+import com.gaur.domain.repository.GetPagerBlogsRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,6 +46,12 @@ object DataModule {
     @Provides
     fun provideDAO(blogDataBase: BlogDataBase): BlogDAO {
         return blogDataBase.getBlogDAO()
+    }
+
+
+    @Provides
+    fun provideGetPagerRepo(apiService: ApiService): GetPagerBlogsRepo {
+        return GetPagerBlogsRepoImpl(apiService)
     }
 
 

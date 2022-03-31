@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class BlogKey(
     @PrimaryKey(autoGenerate = false)
-    var id: Int,
+    var id: String,
     var prev: Int?,
     var next: Int?
 )

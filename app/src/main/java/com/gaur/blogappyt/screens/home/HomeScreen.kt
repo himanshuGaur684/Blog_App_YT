@@ -3,10 +3,8 @@ package com.gaur.blogappyt.screens.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberImagePainter
 import com.gaur.domain.model.Blog
 
@@ -27,26 +26,25 @@ import com.gaur.domain.model.Blog
 fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltViewModel()) {
 
 
-    val res = viewModel.blogs.value
+//    val res = viewModel.blogs.value
 
-    if (res.isLoading) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-        }
-    }
+//    if (res.isLoading) {
+//        Box(modifier = Modifier.fillMaxSize()) {
+//            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+//        }
+//    }
+//
+//    if (res.error.isNotBlank()) {
+//        Box(modifier = Modifier.fillMaxSize()) {
+//            Text(text = res.error.toString(), modifier = Modifier.align(Alignment.Center))
+//        }
+//    }
 
-    if (res.error.isNotBlank()) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Text(text = res.error.toString(), modifier = Modifier.align(Alignment.Center))
-        }
-    }
+    val list = viewModel.pager.collectAsLazyPagingItems()
 
     LazyColumn {
-        res.data?.let {
-            items(it) {
-                PostItem(it)
-            }
-
+        items(list.itemCount) {
+            PostItem(it = list[it]!!)
         }
 
     }
@@ -59,7 +57,11 @@ fun PostItem(it: Blog) {
 
     Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
 
-        Row(modifier = Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp), verticalAlignment = Alignment.CenterVertically
+        ) {
 
             CircularImage(50.0, 50.0, 25.0, it.owner.picture)
 
