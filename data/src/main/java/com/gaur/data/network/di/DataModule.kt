@@ -3,10 +3,12 @@ package com.gaur.data.network.di
 import android.content.Context
 import com.gaur.common.Constant
 import com.gaur.data.network.ApiService
+import com.gaur.data.repository.GetBlogDetailsRepoImpl
 import com.gaur.data.repository.GetBlogsRepositoryImpl
 import com.gaur.data.repository.GetPagerBlogsRepoImpl
 import com.gaur.data.room.BlogDAO
 import com.gaur.data.room.BlogDataBase
+import com.gaur.domain.repository.GetBlogDetailsRepo
 import com.gaur.domain.repository.GetBlogsRepository
 import com.gaur.domain.repository.GetPagerBlogsRepo
 import dagger.Module
@@ -52,6 +54,11 @@ object DataModule {
     @Provides
     fun provideGetPagerRepo(apiService: ApiService): GetPagerBlogsRepo {
         return GetPagerBlogsRepoImpl(apiService)
+    }
+
+    @Provides
+    fun provideGetBlogDetailsRepo(apiService: ApiService): GetBlogDetailsRepo {
+        return GetBlogDetailsRepoImpl(apiService)
     }
 
 

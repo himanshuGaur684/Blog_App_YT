@@ -1,6 +1,7 @@
 package com.gaur.blogappyt.screens.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,7 +45,9 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
 
     LazyColumn {
         items(list.itemCount) {
-            PostItem(it = list[it]!!)
+            PostItem(it = list[it]!!) {
+                navController.navigate("details/${it}")
+            }
         }
 
     }
@@ -53,9 +56,12 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
 }
 
 @Composable
-fun PostItem(it: Blog) {
+fun PostItem(it: Blog, l: (String) -> Unit) {
 
-    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .clickable { l.invoke(it.id) }, verticalArrangement = Arrangement.Center
+    ) {
 
         Row(
             modifier = Modifier
@@ -82,7 +88,7 @@ fun PostItem(it: Blog) {
         Text(
             text = it.text,
             modifier = Modifier.padding(12.dp),
-            style = TextStyle(color= Color.Gray, fontSize = 20.sp)
+            style = TextStyle(color = Color.Gray, fontSize = 20.sp)
         )
 
         Divider()
